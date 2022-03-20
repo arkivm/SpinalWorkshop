@@ -9,5 +9,19 @@ case class Counter(width: Int) extends Component {
     val full     = out Bool()
   }
 
-  //TODO define the logic
+  val full_value = UInt(width bits).setAll()
+  var value = 0
+  value = value + 1
+
+  io.value := value
+
+  when (io.clear === True) {
+    io.value := 0
+  }
+
+  when (io.value === full_value) {
+    io.full := True
+  }.otherwise {
+    io.full := False
+  }
 }
